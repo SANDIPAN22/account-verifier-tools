@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "Library of tools which will help developers to verify user accounts while registering them for any application",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -18,10 +20,13 @@
     "login",
     "email-activation",
     "email",
-    "signup"
+    "signup",
+    "node",
+    "npm",
+    "express"
   ],
-  "author": "Sandipan Chakraborty",
-  "license": "ISC",
+  "author": "Sandipan Chakraborty <chak.sandipan22@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.15"
@@ -29,5 +34,8 @@
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
     "@types/nodemailer": "^6.4.16"
-  }
+  },
+  "files": [
+    "dist/**/**/*"
+  ]
 }
