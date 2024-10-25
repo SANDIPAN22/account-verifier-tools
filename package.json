@@ -1,0 +1,25 @@
+{
+  "name": "account-verifier-tools",
+  "version": "1.0.0",
+  "description": "Library of tools which will help developers to verify user accounts while registering them for any application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SANDIPAN22/account-verifier-tools"
+  },
+  "keywords": [
+    "email-verify",
+    "forgot-password",
+    "user.",
+    "register",
+    "login",
+    "email-activation",
+    "email",
+    "signup"
+  ],
+  "author": "Sandipan Chakraborty",
+  "license": "ISC"
+}
