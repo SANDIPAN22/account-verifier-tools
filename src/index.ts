@@ -1,3 +1,3 @@
-import GmailClientCore from "./email-tools/gmail-tools"
+import GmailClientCore from "./email-tools/gmail-tools";
 
-export {GmailClientCore}
+export {GmailClientCore};
