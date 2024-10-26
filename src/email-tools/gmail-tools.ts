@@ -26,7 +26,6 @@ export default class GmailClientCore {
     private getGmailTransporter(): Transporter{
         return createTransport(this.config as TransportOptions);
     }
-
     public async sendVerifierEmail(email: string, redirectURL: string, validityInMinutes: number){
         const transporter = this.getGmailTransporter();
         const token = jwt.sign({email: email}, this.appData.appSecret, {expiresIn: `${validityInMinutes}m` });
@@ -37,17 +36,12 @@ export default class GmailClientCore {
                 subject: `Email Verification Link for ${this.appData.appName}`,
                 html: renderConfirmEmailTemplate(this.appData.appName, `${redirectURL}?token=${token}`, validityInMinutes)
             });
-
-
-        
     }
-
     public verifyEmail(token: string): object | never{
             const decoded = jwt.verify(token, this.appData.appSecret) as jwt.JwtPayload;
             return {email: decoded.email, verification: "done",scope: {appName:this.appData.appName}};
 
     }
-
     public async sendPasswordResetEmail(email: string, passwordResetFormURL: string, validityInMinutes: number) {
         const transporter = this.getGmailTransporter();
         const token = jwt.sign({email: email}, this.appData.appSecret, {expiresIn: `${validityInMinutes}m` });
@@ -59,7 +53,6 @@ export default class GmailClientCore {
             html: renderPasswordResetEmailTemplate(this.appData.appName, `${passwordResetFormURL}?token=${token}`, validityInMinutes)
         });
     }
-
     public verifyPasswordResetLink(token: string){
         const decoded = jwt.verify(token, this.appData.appSecret) as jwt.JwtPayload;
         return {email: decoded.email, verification: "done", scope: {appName: this.appData.appName}};
