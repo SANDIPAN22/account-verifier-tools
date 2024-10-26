@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import {TransportOptions, Transporter, createTransport} from "nodemailer"
-import {renderTemplate} from "./templates/verify-email-templates/simple"
-
+import {renderConfirmEmailTemplate} from "./templates/verify-email-templates/simple"
+import {renderPasswordResetEmailTemplate} from "./templates/password-reset-templates/simple"
 export default class GmailClientCore {
     private config = {
         service: "gmail", 
@@ -34,8 +34,8 @@ export default class GmailClientCore {
             await transporter.sendMail({
                 from: `No Reply ${this.config.auth.user}`,
                 to: email,
-                subject: "Email Verification Link",
-                html: renderTemplate(this.appData.appName, `${redirectURL}?token=${token}`, validityInMinutes)
+                subject: `Email Verification Link for ${this.appData.appName}`,
+                html: renderConfirmEmailTemplate(this.appData.appName, `${redirectURL}?token=${token}`, validityInMinutes)
             })
 
 
@@ -43,12 +43,26 @@ export default class GmailClientCore {
     }
 
     public verifyEmail(token: string): object | never{
-
             const decoded = jwt.verify(token, this.appData.appSecret) as jwt.JwtPayload
             return {email: decoded.email, verification: "done",scope: {appName:this.appData.appName}}
 
+    }
 
+    public async sendPasswordResetEmail(email: string, passwordResetFormURL: string, validityInMinutes: number) {
+        const transporter = this.getGmailTransporter()
+        const token = jwt.sign({email: email}, this.appData.appSecret, {expiresIn: `${validityInMinutes}m` })
+        
+        await transporter.sendMail({
+            from: `No Reply ${this.config.auth.user}`,
+            to: email,
+            subject: `Reset Password Link for ${this.appData.appName}`,
+            html: renderPasswordResetEmailTemplate(this.appData.appName, `${passwordResetFormURL}?token=${token}`, validityInMinutes)
+        })
+    }
 
+    public verifyPasswordResetLink(token: string){
+        const decoded = jwt.verify(token, this.appData.appSecret) as jwt.JwtPayload
+        return {email: decoded.email, verification: "done", scope: {appName: this.appData.appName}}
     }
 }
 

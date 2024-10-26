@@ -1,4 +1,4 @@
-export const renderTemplate = (appName: string, redirectURL: string, validityInMinutes: number) => {
+export const renderConfirmEmailTemplate = (appName: string, redirectURL: string, validityInMinutes: number) => {
   return `
 <!DOCTYPE html>
 <html>
