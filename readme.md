@@ -131,10 +131,6 @@ try {
 
 If you have any feedback, please reach out to us at chak.sandipan22@gmail.com
 
-## Support
-
-For support, email fake@fake.com or join our Slack channel.
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
