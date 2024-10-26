@@ -1,0 +1,2 @@
+echo "Precommit hook is running..."
+npm run lint-fix
