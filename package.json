@@ -1,39 +1,41 @@
 {
   "name": "account-verifier-tools",
-  "version": "1.0.0",
-  "description": "Library of tools which will help developers to verify user accounts while registering them for any application",
+  "version": "2.0.0",
+  "description": "Library of tools which will help developers to verify user using email validation, captcha validation and etc.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare": "eslint . --fix && npm run build",
+    "prepare": "husky install && eslint . --fix && npm run build",
     "lint-fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/SANDIPAN22/account-verifier-tools"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo `HUSKY 🐶 is running pre-commit hooks ...` && npm run lint-fix"
-    }
-  },
   "keywords": [
     "email-verify",
     "forgot-password",
-    "user.",
+    "user",
     "register",
     "login",
     "email-activation",
     "email",
-    "signup",
+    "sign-up",
     "node",
     "npm",
-    "express"
+    "express",
+    "captcha",
+    "create captcha",
+    "custom captcha",
+    "math captcha",
+    "captcha-validator",
+    "captcha data url"
   ],
   "author": "Sandipan Chakraborty <chak.sandipan22@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "canvas": "^2.11.2",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.15"
   },

@@ -8,7 +8,10 @@ A simple and efficient npm package to handle email verification for user registr
 - Javascript and Typescript both support
 - Customizable validity-duration for links
 - Responsive email templates
-- Two primary functionality 1. Email Confirmation 2. Forgot Password Confirmation
+- Primary functionalities
+        1. Email Confirmation
+        2. Forgot Password Email and Confirmation
+        3. Captcha Generation (Alphanumeric & Math based)
 
 ## Installation
 
@@ -19,7 +22,9 @@ Install account-verifier-tools with npm
 
 ```
 
-## Creation A Gmail Client
+## 1. Confirm-Email Flow
+
+### Creation of A Gmail Client
 
 ```javascript
 const { GmailClientCore } = require("account-verifier-tools");
@@ -38,9 +43,7 @@ const client = new GmailClientCore(
 );
 ```
 
-## Confirm-Email Flow
-
-Trigger Confirm-Email mail to the new user
+### Trigger Confirm-Email mail to the new user
 
 ```javascript
 // sendVerifierEmail takes 3 parameters
@@ -59,7 +62,7 @@ try {
 }
 ```
 
-Verify the Confirm-Email link
+### Verify the Confirm-Email link
 
 ```javascript
 // this snippet should be present inside the controller of email-verify route
@@ -74,9 +77,28 @@ try {
 }
 ```
 
-## Forgot-Password Flow
+## 2. Forgot-Password Flow
 
-Trigger Forgot-Password mail when user entered his/her email id
+### Creation of A Gmail Client
+
+```javascript
+const { GmailClientCore } = require("account-verifier-tools");
+
+// Takes 4 parameters to create a Gmail Client
+// 1. sender gmail id
+// 2. send gmail app password (NOTE: app password is not the account the password)
+// 3. Application Name / Project Name
+// 4. Application Secret
+
+const client = new GmailClientCore(
+  "xxxx@gmail.com",
+  "aaaa bbbb cccc dddd",
+  "My Demo Application",
+  "sssssssssssssssssssssssshhhhh!"
+);
+```
+
+### Trigger Forgot-Password mail when user entered his/her email id
 
 ```javascript
 // sendPasswordResetEmail takes 3 parameters
@@ -95,7 +117,7 @@ try {
 }
 ```
 
-Verify the Forgot-Password link
+### Verify the Forgot-Password link
 
 ```javascript
 // this snippet should be present inside the controller of reset-password route
@@ -115,15 +137,57 @@ try {
 }
 ```
 
-## Image of the mail template of Confirm-Email
+## 3. Captcha Creation Flow
+
+### Alphanumeric Captcha Creation
+
+Just by calling getCaptcha method developer can get a captcha data url and the real text. The captcha data url can be used inside inside HTML <img> tag. Every captcha contains 5 characters with lots of noise, different rotation and different colors. Additionally, the real text will later be used to validate the user's input. It can be stored in the session or anywhere else as per developer's wish (but don't make it accessible to user-client to avoid vulnerabilities).
+
+```javascript
+const { getCaptcha } = require("account-verifier-tools");
+
+// example given as an express js controller (but developer can use it in other places also)
+app.get("/captcha", (req, res) => {
+  const { image, text } = getCaptcha();
+  console.log("Captcha text", text);
+  res.send(`<img class="generated-captcha" src="${image}">`);
+});
+```
+
+### Math Based Captcha Creation
+
+Just by calling getMathCaptcha method developer can get a captcha data url and the real solution. The captcha data url can be used inside inside HTML <img> tag. Every captcha contains a simple math problem with lots of noise, different rotation and different colors. Additionally, the real solution will later be used to validate the user's input. It can be stored in the session or anywhere else as per developer's wish (but don't make it accessible to user-client to avoid vulnerabilities).
+
+```javascript
+const { getMathCaptcha } = require("account-verifier-tools");
+
+// example given as an express js controller (but developer can use it in other places also)
+app.get("/mcaptcha", (req, res) => {
+  const { image, result } = getMathCaptcha();
+  console.log("Captcha result", result);
+  res.send(`<img class="generated-captcha" src="${image}">`);
+});
+```
+
+## Sample Screenshots
+
+### Image of the mail template of Confirm-Email
 
 ![App Screenshot](https://i.imghippo.com/files/QFT9240mVM.png)
 
-## Image of the mail template of Forgot-Password
+### Image of the mail template of Forgot-Password
 
 ![App Screenshot](https://i.imghippo.com/files/UXf8628II.png)
 
-## Authors
+### Image of a sample alphanumeric captcha
+
+![App Screenshot](https://i.imghippo.com/files/dvx5554PKI.png)
+
+### Image of a sample math-based captcha
+
+![App Screenshot](https://i.imghippo.com/files/NAVS9476Zi.png)
+
+## Author
 
 - [Sandipan Chakraborty](https://www.linkedin.com/in/sandipan220799)
 
